@@ -1,0 +1,15 @@
+---
+title: "Week 2 Leaflet"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+# Outline
+
+This notebook outlines the creation of a leaflet map, submitted for the Developing Data Products Coursera course, on Week 2. I have chosen to use a dataset from Ireland, the National Inventory of Architectural Heritage.
+
+```{r}
+
+```
+
