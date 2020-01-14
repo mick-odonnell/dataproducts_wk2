@@ -7,6 +7,8 @@ editor_options:
   chunk_output_type: inline
 ---
 
+*Produced on 14th January 2020*
+
 # Outline
 
 This notebook outlines the creation of a leaflet map, submitted for the Developing Data Products Coursera course, on Week 2. I have chosen to use a dataset from Ireland, the National Inventory of Architectural Heritage.
