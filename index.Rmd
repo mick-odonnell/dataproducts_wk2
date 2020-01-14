@@ -1,0 +1,36 @@
+---
+title: "Week 2 Leaflet"
+output:
+  html_document:
+    df_print: paged
+editor_options:
+  chunk_output_type: inline
+---
+
+# Outline
+
+This notebook outlines the creation of a leaflet map, submitted for the Developing Data Products Coursera course, on Week 2. I have chosen to use a dataset from Ireland, the National Inventory of Architectural Heritage.
+
+```{r}
+library(tidyverse)
+library(leaflet)
+library(colorspace)
+
+
+niah_data <- read_csv("http://dahg.maps.arcgis.com/sharing/rest/content/items/4b36c9a903f9463e8ccb460055698d72/data", locale = readr::locale(encoding = "latin1"))
+
+
+```
+The map being produced is of the architectural heritage of the county of Wicklow - the label on each has the initial building data and the popup describes the site. 
+```{r produce_map}
+#prep data - filter for descriptive info, coords, dates
+niah_data %>% 
+  select(NAME, COMPOSITION, COUNTY, APPRAISAL, LONGITUDE, LATITUDE, DATEFROM, DATETO) %>% 
+  filter(COUNTY == "Wicklow")-> map_data
+
+leaflet(map_data) %>% 
+  addTiles() %>% 
+  addCircles(popup = ~as.character(COMPOSITION),
+             label = ~as.character(DATEFROM))
+```
+
