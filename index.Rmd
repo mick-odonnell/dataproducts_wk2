@@ -1,5 +1,5 @@
 ---
-title: "Week 2 Leaflet"
+title: "Week 3 Leaflet"
 output:
   html_document:
     df_print: paged
@@ -7,32 +7,29 @@ editor_options:
   chunk_output_type: inline
 ---
 
-*Produced on 14th January 2020*
+*Produced on 21st January 2020*
 
 # Outline
 
-This notebook outlines the creation of a leaflet map, submitted for the Developing Data Products Coursera course, on Week 2. I have chosen to use a dataset from Ireland, the National Inventory of Architectural Heritage.
-
-```{r}
+This notebook outlines the creation of a plotly plot, submitted for the Developing Data Products Coursera course, on Week 3. I have chosen to use a dataset from Ireland, the .
+```{r include=FALSE}
 library(tidyverse)
-library(leaflet)
-library(colorspace)
-
-
-niah_data <- read_csv("http://dahg.maps.arcgis.com/sharing/rest/content/items/4b36c9a903f9463e8ccb460055698d72/data", locale = readr::locale(encoding = "latin1"))
+library(plotly)
 
 
 ```
-The map being produced is of the architectural heritage of the county of Wicklow - the label on each has the initial building data and the popup describes the site. 
-```{r produce_map}
-#prep data - filter for descriptive info, coords, dates
-niah_data %>% 
-  select(NAME, COMPOSITION, COUNTY, APPRAISAL, LONGITUDE, LATITUDE, DATEFROM, DATETO) %>% 
-  filter(COUNTY == "Wicklow")-> map_data
 
-leaflet(map_data) %>% 
-  addTiles() %>% 
-  addCircles(popup = ~as.character(COMPOSITION),
-             label = ~as.character(DATEFROM))
+Looking at the data, a couple of interesting features might be;  
+* the earliest date attributed to the site
+* the number of sites by county
+
+This involves three dimensions so quite possibly a heatmap might be the best option? We will use ggplot to produce the plot and then build a ggplotly object for the final output..
+
+
+```{r produce_plot}
+niah_data %>% 
+  count(ORIGINAL_TYPE)
+
+
 ```
 
