@@ -1,35 +1,24 @@
 ---
-title: "Week 3 Leaflet"
-output:
-  html_document:
-    df_print: paged
-editor_options:
-  chunk_output_type: inline
+title: "Coursera Developing Data Products Wk3"
+author: "Mick O Donnell"
+date: "7 February 2020"
+output: ioslides_presentation
 ---
 
-*Produced on 21st January 2020*
-
-# Outline
-
-This notebook outlines the creation of a plotly plot, submitted for the Developing Data Products Coursera course, on Week 3. I have chosen to use a dataset from Ireland, the .
-```{r include=FALSE}
+```{r setup, include=FALSE}
 library(tidyverse)
-library(plotly)
+```
+
+## R Markdown
+
+The objective of this presentation is to demonstrate the functionality of the _Plotly_ visualisation tool.
+
+The subject of the plot is from the Tidy Tuesday data analysis 14th January 2020, about "passwords". You can find information on the dataset <here>(https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-01-14/readme.md)
+
+## Password Strength Vs Type
+
+```{r cars, echo = FALSE, message=FALSE}
+passwords <- read_csv("data/password.csv")
 
 
 ```
-
-Looking at the data, a couple of interesting features might be;  
-* the earliest date attributed to the site
-* the number of sites by county
-
-This involves three dimensions so quite possibly a heatmap might be the best option? We will use ggplot to produce the plot and then build a ggplotly object for the final output..
-
-
-```{r produce_plot}
-niah_data %>% 
-  count(ORIGINAL_TYPE)
-
-
-```
-
