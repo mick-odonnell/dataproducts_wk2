@@ -1,35 +1,51 @@
 ---
-title: "Week 3 Leaflet"
-output:
-  html_document:
-    df_print: paged
-editor_options:
-  chunk_output_type: inline
+title: "Developing Data Products Wk 3"
+author: "Michael O'Donnell"
+date: "9 February 2020"
+output: ioslides_presentation
 ---
 
-*Produced on 21st January 2020*
 
-# Outline
+## Outline
 
-This notebook outlines the creation of a plotly plot, submitted for the Developing Data Products Coursera course, on Week 3. I have chosen to use a dataset from Ireland, the .
-```{r include=FALSE}
+This notebook outlines the creation of a plotly plot, submitted for the Developing Data Products Coursera course, on Week 3. I have chosen to use a dataset from the Tidy Tuesday Project, more about which you can find [here](https://github.com/rfordatascience/tidytuesday).
+
+The specific dataset is about songs, consisting of metadata taken from Spotify.
+
+```{r setup, include=FALSE, message=FALSE}
 library(tidyverse)
 library(plotly)
 
-
+spotify_songs <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-01-21/spotify_songs.csv')
 ```
 
-Looking at the data, a couple of interesting features might be;  
-* the earliest date attributed to the site
-* the number of sites by county
+## Plot Overview
 
-This involves three dimensions so quite possibly a heatmap might be the best option? We will use ggplot to produce the plot and then build a ggplotly object for the final output..
+This plot looks at the relationship between song popularity and song duration. We will also use a grouping on "playlist genre" to see if this has any relationship with the outcome.
 
 
-```{r produce_plot}
-niah_data %>% 
-  count(ORIGINAL_TYPE)
+## Plot
+```{r plot, echo = FALSE, message=FALSE}
+# let's create a ggplot and then build a ggplotly object from it
+
+# downsample to impriove performance of our plot...
+set.seed(1225)
+
+spotify_songs_q <- spotify_songs %>% 
+  sample_frac(0.2)
 
 
+spotify_songs_q %>% 
+  ggplot(aes(duration_ms/1000, 
+             track_popularity,
+             text = track_name)) +
+  geom_point(aes(color = playlist_genre), alpha = 0.2) +
+  scale_color_discrete(name = "Genre") +
+  labs(x = "Song Duration (seconds)",
+       y = "Song Popularity",
+       title = "How does song duration and genre affect popularity?") -> p
+
+p %>% ggplotly(tooltip = "text")
 ```
+
 
